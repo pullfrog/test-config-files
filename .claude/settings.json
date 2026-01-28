@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "robinMCP": {
+      "command": "node",
+      "args": [
+        "./mcp-servers/robin-mcp/build/index.js"
+      ],
+      "env": {}
+    }
+  }
+}

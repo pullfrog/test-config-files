@@ -1,0 +1,6 @@
+# Codex CLI MCP Configuration
+# Note: Section name must use underscore (mcp_servers), not hyphen
+
+[mcp_servers.robinMCP]
+command = "node"
+args = ["./mcp-servers/robin-mcp/build/index.js"]
