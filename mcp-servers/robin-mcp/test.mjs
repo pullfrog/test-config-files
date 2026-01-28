@@ -47,7 +47,7 @@ const callToolRequest = {
   id: 3,
   method: "tools/call",
   params: {
-    name: "tell_secret",
+    name: "tell_story",
     arguments: {},
   },
 };
@@ -73,8 +73,8 @@ setTimeout(() => {
           const content = response.result.content[0];
           if (content.type === "text") {
             const data = JSON.parse(content.text);
-            if (data.secret && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(data.secret)) {
-              console.log("✓ Build works! Secret value:", data.secret);
+            if (data.story && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(data.story)) {
+              console.log("✓ Build works! Story value:", data.story);
               foundSecret = true;
             }
           }
@@ -85,7 +85,7 @@ setTimeout(() => {
     }
 
     if (!foundSecret) {
-      console.error("✗ Test failed: No valid secret found in response");
+      console.error("✗ Test failed: No valid story found in response");
       console.error("Output:", output);
       process.exit(1);
     }

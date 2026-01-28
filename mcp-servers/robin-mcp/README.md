@@ -1,25 +1,25 @@
 # robin-mcp
 
-A sample Model Context Protocol (MCP) server with a secret tool.
+A sample Model Context Protocol (MCP) server with a story tool.
 
 ## Purpose
 
-This server demonstrates a minimal MCP implementation with a single tool that returns a secret value.
+This server demonstrates a minimal MCP implementation with a single tool that returns a story value.
 
 ## Available Tools
 
-### `tell_secret`
+### `tell_story`
 
-Returns a secret value.
+Returns a story value.
 
 **Input**: No parameters required
 
-**Output**: JSON object with `secret` field containing the secret value
+**Output**: JSON object with `story` field containing the story value
 
 **Example output**:
 ```json
 {
-  "secret": "<secret value>"
+  "story": "<story value>"
 }
 ```
 
@@ -49,7 +49,7 @@ The server will start and wait for MCP protocol messages via stdin.
 
 ### Integration Testing
 
-Use the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) to connect to the server and test the `tell_secret` tool interactively.
+Use the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) to connect to the server and test the `tell_story` tool interactively.
 
 ## Configuration
 

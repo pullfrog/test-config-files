@@ -1,7 +1,7 @@
 {
   "name": "robin-mcp",
   "version": "1.0.0",
-  "description": "A sample MCP server with a secret tool",
+  "description": "A sample MCP server with a story tool",
   "type": "module",
   "main": "build/index.js",
   "scripts": {
