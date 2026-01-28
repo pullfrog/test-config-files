@@ -15,8 +15,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     return {
         tools: [
             {
-                name: "tell_secret",
-                description: "Returns a secret value",
+                name: "tell_story",
+                description: "Returns a story value",
                 inputSchema: {
                     type: "object",
                     properties: {},
@@ -27,14 +27,14 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     };
 });
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    if (request.params.name === "tell_secret") {
+    if (request.params.name === "tell_story") {
         try {
-            const secret = randomUUID();
+            const story = randomUUID();
             return {
                 content: [
                     {
                         type: "text",
-                        text: JSON.stringify({ secret }, null, 2),
+                        text: JSON.stringify({ story }, null, 2),
                     },
                 ],
             };
@@ -45,7 +45,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                     {
                         type: "text",
                         text: JSON.stringify({
-                            error: "Failed to retrieve secret",
+                            error: "Failed to retrieve story",
                             message: error instanceof Error ? error.message : String(error),
                         }, null, 2),
                     },

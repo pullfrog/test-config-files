@@ -69,7 +69,7 @@ This server is already configured in the following agent config files:
 
 Build the server:
 ```bash
-pnpm build
+npm run build
 ```
 
 The compiled output will be in the `build/` directory.
