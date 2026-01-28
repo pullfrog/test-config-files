@@ -19,8 +19,8 @@ The configurations include three example MCP servers:
 ### 1. robinMCP Server (Local/stdio)
 - **Path**: `./mcp-servers/robin-mcp`
 - **Command**: `node ./mcp-servers/robin-mcp/build/index.js`
-- **Purpose**: Sample custom MCP server with a secret tool
-- **Tools**: `tell_secret` - Returns a secret value
+- **Purpose**: Sample custom MCP server with a story tool
+- **Tools**: `tell_story` - Returns a story value
 
 ## Additional Resources
 
