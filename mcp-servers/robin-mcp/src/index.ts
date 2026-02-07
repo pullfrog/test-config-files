@@ -35,9 +35,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
+// test nonce is passed as a process argument by the test runner.
+// this is the most agent-agnostic approach: process args are always forwarded
+// by MCP clients since they're part of the command definition itself.
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "get_test_value") {
-    const value = process.env.PULLFROG_MCP_TEST ?? "NO_TEST_VALUE_FOUND";
+    const value = process.argv[2] ?? "NO_TEST_VALUE_FOUND";
     return {
       content: [
         {
