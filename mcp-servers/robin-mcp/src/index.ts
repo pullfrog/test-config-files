@@ -8,65 +8,38 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 
-// well-known path where the test runner writes the secret file.
-// used as fallback for agents whose CLIs don't pass parent env to MCP servers.
-const WELL_KNOWN_SECRET_PATH = "/tmp/pullfrog-mcp-secret/secret.txt";
+// well-known path where the test runner writes the secret file via repoSetup.
+// this path is outside the repo so agents cannot read it via file_read.
+const SECRET_PATH = "/tmp/pullfrog-mcp-secret/secret.txt";
 
 const server = new Server(
-  {
-    name: "robinMCP",
-    version: "1.0.0",
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
-  }
+  { name: "robinMCP", version: "1.0.0" },
+  { capabilities: { tools: {} } }
 );
 
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return {
-    tools: [
-      {
-        name: "get_test_value",
-        description: "Returns a read-only test value (no side effects, safe operation)",
-        inputSchema: {
-          type: "object",
-          properties: {},
-          required: [],
-        },
-      },
-    ],
-  };
-});
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  tools: [
+    {
+      name: "get_test_value",
+      description: "Returns a read-only test value (no side effects, safe operation)",
+      inputSchema: { type: "object", properties: {}, required: [] },
+    },
+  ],
+}));
 
-// resolve the secret value with a three-tier fallback:
-// 1. PULLFROG_MCP_SECRET_FILE env var (agents that inherit parent env)
-// 2. well-known path /tmp/pullfrog-mcp-secret/secret.txt (agents that don't)
-// 3. process.argv[2] (original nonce-based approach)
-function resolveTestValue(): string {
-  const envPath = process.env.PULLFROG_MCP_SECRET_FILE;
-  if (envPath && existsSync(envPath)) {
-    return readFileSync(envPath, "utf-8").trim();
+function getTestValue(): string {
+  if (existsSync(SECRET_PATH)) {
+    return readFileSync(SECRET_PATH, "utf-8").trim();
   }
-  if (existsSync(WELL_KNOWN_SECRET_PATH)) {
-    return readFileSync(WELL_KNOWN_SECRET_PATH, "utf-8").trim();
-  }
-  return process.argv[2] ?? "NO_TEST_VALUE_FOUND";
+  return "NO_TEST_VALUE_FOUND";
 }
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "get_test_value") {
     return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify({ value: resolveTestValue() }, null, 2),
-        },
-      ],
+      content: [{ type: "text", text: JSON.stringify({ value: getTestValue() }, null, 2) }],
     };
   }
-
   throw new Error(`Unknown tool: ${request.params.name}`);
 });
 

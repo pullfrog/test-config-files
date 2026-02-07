@@ -1,27 +1,13 @@
 # Agent MCP Configuration
 
-This repository includes sample MCP (Model Context Protocol) server configurations for various AI coding agents.
+Each agent has its own config file that registers `robinMCP` as a local stdio server:
 
-## Configuration Files
+| Agent | Config file | Key |
+|-------|------------|-----|
+| Claude Code | `.mcp.json` | `mcpServers.robinMCP` |
+| Cursor | `.cursor/mcp.json` | `mcpServers.robinMCP` |
+| Codex CLI | `.codex/config.toml` | `mcp_servers.robinMCP` |
+| Gemini CLI | `.gemini/settings.json` | `mcpServers.robinMCP` |
+| OpenCode | `opencode.json` | `mcp.robinMCP` |
 
-Each agent has its own configuration file with examples of both HTTP and local MCP servers:
-
-- **Claude Code**: `.mcp.json`
-- **Cursor**: `.cursor/mcp.json`
-- **Codex CLI**: `.codex/config.toml`
-- **Gemini CLI**: `.gemini/settings.json`
-- **OpenCode**: `opencode.json`
-
-## MCP servers
-
-The configurations include the MCP server:
-
-### robinMCP (Local/stdio)
-
-- **Command**: `node ./mcp-servers/robin-mcp/build/index.js`
-- **Purpose**: Sample custom MCP server with a story tool
-- **Tools**: `tell_story` - Returns a story value
-
-## Additional Resources
-
-- [MCP Documentation](https://modelcontextprotocol.io)
+All configs point to the same command: `node ./mcp-servers/robin-mcp/build/index.js`
